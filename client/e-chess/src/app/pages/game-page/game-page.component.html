@@ -1,0 +1,126 @@
+<div class="flex-outer">
+    <div class="flex-b col-9 colll-">
+        <div class="board col-8 colll-">
+            <div *ngIf="!isBlack" class="col-10 nine- player-1" [ngClass]="isBlack && (counter % 2) == 1?'turn':null"><i
+                    class="bi bi-person-fill" style="color: black;"></i> {{playerBlack}}
+                <div class="time-1" style="float: right;">{{b_timer}}</div>
+            </div>
+            <div *ngIf="isBlack" class="col-10 nine- player-2" [ngClass]="isWhite && (counter % 2) == 0?'turn':null"><i
+                    class="bi bi-person-fill" style="color: whitesmoke;"></i>
+                {{playerWhite}}
+                <div class="time-2" style="float: right;">{{w_timer}}</div>
+            </div>
+            <div class="chess-board">
+                <div class="col" style="display: flex;justify-content: center;flex-direction: column;"
+                    *ngFor="let row of letters; let r = index">
+                    <div class="chess-board-cell" *ngFor="let col of numbers; let c = index"
+                        (click)="selectCell(row, col)"
+                        [ngClass]="(r + c) % 2 == 1 ? 'black-board-cell' : 'white-board-cell'">
+                        <div [id]="row + col" class="chess-board-cell-inner">
+                            <p class="chess-piece" *ngIf="getPieceCodes(row, col) !== ''"
+                                [innerHTML]="getPieceCodes(row, col)"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!isBlack" class="col-10 nine- player-2" [ngClass]="isWhite && (counter % 2) == 0?'turn':null"><i
+                    class="bi bi-person-fill" style="color: whitesmoke;"></i>
+                {{playerWhite}}
+                <div class="time-2" style="float: right;">{{w_timer}}</div>
+            </div>
+            <div *ngIf="isBlack" class="col-10 nine- player-1" [ngClass]="isBlack && (counter % 2) == 1?'turn':null"><i
+                    class="bi bi-person-fill" style="color: black;"></i> {{playerBlack}}
+                <div class="time-1" style="float: right;">{{b_timer}}</div>
+            </div>
+        </div>
+        <div class="flex-lateral col-4 colll-">
+            <div class="moves col-12 nine-"> <span *ngFor="let move of history" [innerHTML]="move"
+                    style="font-family: cursive;"> </span> </div>
+            <div class="btn-container col-12 nine-">
+                <button type="button" class="btn btn-primary col-5 b-size" (click)="rotateBoard()">Flip
+                    <i class="bi bi-arrow-repeat"></i>
+                </button>
+                <button type="button" class="btn btn-danger col-5 b-size" (click)="open_exit_d()">Exit <i
+                        class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="col-12 nine-">
+                <div class="chat col-12 colll-">
+                    <div *ngFor="let msg of chat_message" style="word-wrap: break-word;">
+                        {{msg}}</div>
+                </div>
+                <div class="col-12 colll-"><input type="text " class="col-12 colll-" placeholder="Send message"
+                        style="padding-left: 10px;margin-top: 2px;" [formControl]="msg" (keyup.enter)="sendMsg()">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isLoading" class="loader">
+    <div class="spinner-border  text-success" role="status" style="width: 8rem;height: 8rem;border-width: 10px;">
+    </div>
+    <div class="text-loader">Please wait...</div>
+</div>
+
+<div *ngIf="isFinish" class="my-modal">
+
+    <div class="card col-6 card-s-">
+        <div class="card-header">
+            <span *ngIf="isDraw">Draw</span>
+            <span *ngIf="isFinish && !!winner">{{winner}} win</span>
+
+        </div>
+        <div class="c-flex">
+            <div class="m-flex">
+                <div class=" player-1"><i class="bi bi-person-fill" style="color: black;font-size: 30px;"></i>
+                    {{playerBlack}}</div>
+                <div class=" player-2"><i class="bi bi-person-fill" style="color: whitesmoke;font-size: 30px;"></i>
+                    {{playerWhite}}
+                </div>
+
+            </div>
+            <div class="m-flex">
+                <div> <i class="bi bi-trophy-fill"
+                        style="padding-top: 5px;color: rgb(248, 222, 53);font-size: 20px;"></i>
+                    {{b_score}}<span [ngClass]="{'w-color':winner==playerBlack,'l-color':winner==playerWhite}">
+                        <span *ngIf="winner==playerBlack">{{victory}}</span>
+                        <span *ngIf="winner==playerWhite">{{lose}}</span>
+                    </span>
+                </div>
+                <div> <i class="bi bi-trophy-fill"
+                        style="padding-top: 5px;color: rgb(248, 222, 53);font-size: 20px;"></i>
+                    {{w_score}}<span [ngClass]="{'w-color':winner==playerWhite,'l-color':winner==playerBlack}">
+
+                        <span *ngIf="winner==playerWhite">{{victory}}</span>
+                        <span *ngIf="winner==playerBlack">{{lose}}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="m-flex">
+                <button type="button" class="btn btn-primary col-3 c-size" style="margin-top: 20px;margin-bottom: 10px;"
+                    (click)="close()">Close
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div *ngIf="openD" class="my-modal">
+
+    <div class="card col-6 card-s-">
+        <div class="card-header">
+            <span>Are you sure?</span>
+
+        </div>
+        <div class="m-flex">
+            <button type="button" class="btn btn-primary col-2 c-size" style="margin-top: 20px;margin-bottom: 10px;"
+                (click)="exit()">Yes
+            </button>
+            <button type="button" class="btn btn-danger col-2 c-size" style="margin-top: 20px;margin-bottom: 10px;"
+                (click)="openD=false">No
+            </button>
+        </div>
+    </div>

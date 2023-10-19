@@ -1,0 +1,104 @@
+<div class="profile-f">
+
+    <div class="profile-f col-8"
+        style="background-color: rgb(4, 179, 4);border-radius: 20px;border: 1px solid gray;margin-bottom: 10px;opacity: 0.7;">
+        <img src="../../../assets/Cattura-3.png" style="width: 120px;height: 100px;">
+    </div>
+    <div class="card col-6">
+        <div class="card-body">
+
+            <div class="profile-flex">
+                <div class="user" style="padding-top: 5px;">
+                    <i class="bi bi-person-fill" style="padding-top: 5px;color: gainsboro;"></i>
+                    {{username}}
+                </div>
+                <div class="score" style="padding-top: 5px;">
+                    <i class="bi bi-trophy-fill" style="padding-top: 5px;color: rgb(248, 222, 53);"></i>
+                    {{score}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="profile-f">
+
+    <div class="col-8 profile-flex" style="font-size: 30px;justify-content: space-between;">Rooms
+        <i class="bi bi-plus" style="font-size:30px;padding-right: 5px;" (click)="openModalCreateRoom()"></i>
+    </div>
+
+    <div class="col-8 profile-flex font" *ngIf="Arr_rooms.length==0"
+        style="background-color: rgb(178, 175, 175);border-radius: 5px;padding:20px;">
+        Empty room list,
+        create one</div>
+
+    <div *ngFor="let room of Arr_rooms" class="profile-flex col-8"
+        style="margin-top:5px;justify-content: space-between;background-color: rgb(178, 175, 175);border-radius: 5px;">
+        <div class="col-12 colll- font"
+            style="padding-left: 10px;display: flex;justify-content: space-between;flex-wrap: wrap;">
+            {{room.room_name}}
+            <span class="font"> <i class="bi bi-clock"></i> {{room.room_time}} min</span>
+            <span class="font"> <i class="bi bi-person-fill"></i> {{room.room_players}}</span>
+            <i class="font" [ngClass]="{'bi bi-play-fill':room.room_players<2,'bi bi bi-eye':room.room_players>=2}"
+                (click)="play(room.room_name,room.room_time)" style="padding-right: 10px;"></i>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="profile-f">
+    <button type="button" class="btn btn-danger col-3 coll-" (click)="logout()">Logout <i class="bi bi-box-arrow-right"
+            style="margin-left: 20px;"></i></button>
+</div>
+
+
+<div *ngIf="showModalCreateRoom" class="modal">
+
+    <div class="col-6" style="border: 1px solid gray;border-radius: 5px;">
+        <div class="m-header col-12 colll-" style="font-size: 30px;">Create room</div>
+        <div class="f-flex" *ngIf="showModal">
+            <div class="alert alert-danger color-alert col-12 colll-" style="text-align: center;" role="alert">
+                Room not valid
+                <div data-bs-theme="dark" style="float: right;">
+                    <button type="button" class="btn-close" aria-label="Close" (click)="showModal=false"></button>
+                </div>
+            </div>
+        </div>
+        <div class="m-body col-12 colll-" style="padding: 5px;">
+            <div style="font-size: 20px;">Name</div>
+            <input class="col-11 form-control" style="margin-top: 10px;margin-bottom: 10px;"
+                placeholder="Room name  (max 15 char)" #roomName>
+            <div style="font-size: 20px;">Time</div>
+
+            <div class="profile-flex col-12">
+                <div class="time-1 col-3 coll-" style="padding-top: 5px;">
+                    <button [ngClass]="timeGame==5?'selected':null" type="button"
+                        class="btn btn-outline-light col-12 colll-" (click)="setTime(5)">5min</button>
+                </div>
+                <div class="time-2 col-3 coll-" style="padding-top: 5px;">
+                    <button [ngClass]="timeGame==10?'selected':null" type="button"
+                        class="btn btn-outline-light col-12 colll-" (click)="setTime(10)">10min</button>
+                </div>
+                <div class="time-3 col-3 coll-" style="padding-top: 5px;">
+                    <button [ngClass]="timeGame==30?'selected':null" type="button"
+                        class="btn btn-outline-light col-12 colll-" (click)="setTime(30)">30min</button>
+                </div>
+
+
+            </div>
+
+            <div class="m-footer col-12 colll-">
+
+                <button class="btn btn-primary col-4  coll-"
+                    style="margin-top: 10px;font-size: 20px;margin-bottom: 5px;"
+                    (click)="createRoom(roomName.value)">Save
+                    room</button>
+                <button class="btn btn-danger col-4  coll-" style="margin-top: 10px;font-size: 20px;margin-bottom: 5px;"
+                    (click)="closeModalCreateRoom()">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>

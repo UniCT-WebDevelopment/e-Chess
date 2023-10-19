@@ -1,0 +1,71 @@
+<div class="f-flex">
+    <div *ngIf="showAlert" class="alert alert-danger color-alert col-8 colll-" style="text-align: center;" role="alert">
+        Passwords not equals
+        <div data-bs-theme="dark" style="float: right;">
+            <button type="button" class="btn-close" aria-label="Close" (click)="showAlert=false"></button>
+        </div>
+    </div>
+</div>
+
+<div class="f-flex">
+    <div *ngIf="usernameExist" class="alert alert-danger color-alert col-8 colll-" style="text-align: center;"
+        role="alert">
+        Username already exist
+        <div data-bs-theme="dark" style="float: right;">
+            <button type="button" class="btn-close" aria-label="Close" (click)="usernameExist=false"></button>
+        </div>
+    </div>
+</div>
+
+<div class="f-flex">
+
+    <div class="card col-6 coll-">
+        <div class="card-header">
+            SIGNUP
+        </div>
+
+        <form [formGroup]="submitForm" (ngSubmit)="onSubmit()">
+            <div class="c-flex">
+
+                <div class="mb-2 col-10 coll-">
+                    <label class="col-5 col-form-label">Name</label>
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Enter your name" formControlName="name">
+                    </div>
+                </div>
+                <div class="mb-2 col-10 coll-">
+                    <label class="col-5 col-form-label">Surname</label>
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Enter your Surname"
+                            formControlName="surname">
+                    </div>
+                </div>
+                <div class="mb-2 col-10 coll-">
+                    <label class="col-5 col-form-label">Username</label>
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Player" formControlName="username">
+                    </div>
+                </div>
+                <div class="mb-2 col-10 coll-">
+                    <label for="inputPassword" class="col-5 col-form-label">Password</label>
+                    <div class="col-12">
+                        <input type="password" class="form-control" id="inputPassword" formControlName="password"
+                            placeholder="Min 6 characters">
+                    </div>
+                </div>
+                <div class="mb-2 col-10 coll-">
+                    <label class="col-5 col-form-label">Confirm Password</label>
+                    <div class="col-12">
+                        <input type="password" class="form-control" id="confirmPassword" formControlName="confirm_pass">
+                    </div>
+                </div>
+                <div class="flex-c col-10 mb-3 mt-3 coll-">
+                    <button type="submit" class="btn btn-primary" [disabled]="!submitForm.valid">Signup</button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+
+</div>

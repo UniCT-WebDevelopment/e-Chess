@@ -1,0 +1,39 @@
+<div class="f-flex">
+    <div *ngIf="isnotValid" class="alert alert-danger color-alert col-8 colll-" style="text-align: center;"
+        role="alert">
+        Username or Password invalid
+        <div data-bs-theme="dark" style="float: right;">
+            <button type="button" class="btn-close" aria-label="Close" (click)="isnotValid=false"></button>
+        </div>
+    </div>
+</div>
+
+
+<div class="f-flex">
+    <div class="card col-6 coll-">
+        <div class="card-header">
+            LOGIN
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <div class="c-flex col-12">
+                <div class="mb-2 col-10 coll-">
+                    <label for="staticEmail" class="col-5 col-form-label">Username</label>
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Player" formControlName="username">
+                    </div>
+                </div>
+                <div class="mb-2 col-10 coll-">
+                    <label for="inputPassword" class="col-5 col-form-label">Password</label>
+                    <div class="col-12">
+                        <input type="password" class="form-control" id="inputPassword" formControlName="password">
+                    </div>
+                </div>
+                <div class="flex-c col-10 mb-3 mt-3 coll-">
+                    <button type="submit" class="btn btn-primary col-4" [disabled]="!loginForm.valid ">Login</button>
+                    <button type=" button" class="btn btn-light col-4" (click)="signup()">Signup</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
